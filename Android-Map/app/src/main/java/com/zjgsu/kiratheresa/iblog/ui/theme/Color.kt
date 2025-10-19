@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.ui.theme
+package com.zjgsu.kiratheresa.temp2.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

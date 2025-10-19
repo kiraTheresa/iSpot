@@ -1,3 +1,4 @@
+
 // 模块级 gradle 配置
 plugins {
     alias(libs.plugins.android.application)
@@ -35,13 +36,19 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-//    kotlinOptions {
-//        jvmTarget = "1.8"
-//    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
 
     buildFeatures {
         compose = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+
 }
 
 dependencies {
@@ -53,12 +60,23 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
 
-    // 高德地图 SDK
-    implementation(libs.amap.dmap)
-    implementation(libs.amap.location)
-    implementation(libs.amap.search)
+    // 高德地图整合包
+    implementation("com.amap.api:3dmap:latest.integration")
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // Jetpack Compose BOM（版本统一管理）
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
+
+    // 基础 UI 核心
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Material 3
+    implementation("androidx.compose.material3:material3")
+
+    // Lifecycle (可选但推荐)
+    implementation("androidx.lifecycle:lifecycle-runtime-compose")
+
+
+
 }
