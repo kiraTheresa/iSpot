@@ -1,12 +1,18 @@
 package com.zjgsu.kiratheresa.iblog.service
 
-import com.zjgsu.kiratheresa.iblog.model.*
-import java.util.*
+import com.zjgsu.kiratheresa.iblog.model.FriendRequest
+import com.zjgsu.kiratheresa.iblog.model.FriendRequestStatus
+import com.zjgsu.kiratheresa.iblog.model.InteractionType
+import com.zjgsu.kiratheresa.iblog.model.Message
+import com.zjgsu.kiratheresa.iblog.model.Post
+import com.zjgsu.kiratheresa.iblog.model.SocialInteraction
+import com.zjgsu.kiratheresa.iblog.model.User
+import java.util.UUID
 
 object SocialService {
 
-    // 模拟当前用户ID
-    private const val CURRENT_USER_ID = "current_user"
+    // 统一当前用户ID
+    private const val CURRENT_USER_ID = "user_001"
 
     // 模拟社交数据
     private val friends = mutableListOf<User>()
@@ -15,7 +21,6 @@ object SocialService {
     private val socialInteractions = mutableListOf<SocialInteraction>()
 
     init {
-        // 初始化模拟数据
         initializeMockData()
     }
 
@@ -90,6 +95,9 @@ object SocialService {
         )
     }
 
+    // 获取当前用户ID
+    fun getCurrentUserId(): String = CURRENT_USER_ID
+
     // 获取好友列表
     fun getFriends(): List<User> {
         return friends.toList()
@@ -97,7 +105,6 @@ object SocialService {
 
     // 获取附近用户
     fun getNearbyUsers(maxDistance: Double = 2.0): List<User> {
-        // 这里可以根据距离过滤，暂时返回所有附近用户
         return nearbyUsers.toList()
     }
 
@@ -116,10 +123,7 @@ object SocialService {
             status = FriendRequestStatus.PENDING
         )
         friendRequests.add(request)
-
-        // 记录社交互动
         recordInteraction(toUserId, InteractionType.ADD_FRIEND)
-
         return true
     }
 
@@ -130,7 +134,6 @@ object SocialService {
             it.status = if (accepted) FriendRequestStatus.ACCEPTED else FriendRequestStatus.REJECTED
 
             if (accepted) {
-                // 添加到好友列表
                 val user = nearbyUsers.find { user -> user.id == it.fromUserId }
                 user?.let { friend ->
                     if (!friends.any { f -> f.id == friend.id }) {
@@ -138,7 +141,6 @@ object SocialService {
                     }
                 }
             }
-
             return true
         }
         return false
@@ -166,7 +168,6 @@ object SocialService {
     fun getUserPosts(userId: String): List<Post> {
         recordInteraction(userId, InteractionType.VIEW_POST)
 
-        // 返回模拟动态数据
         return listOf(
             Post(
                 id = "post_1_${userId}",

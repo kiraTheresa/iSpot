@@ -9,9 +9,9 @@ data class MarkerInfo(
     val lng: Double,
     val type: MarkerType = MarkerType.POI,
     val timestamp: Long = System.currentTimeMillis(),
-    val user: User? = null // 关联的用户信息
+    val userName: String? = null, // 改为用户名而非完整User对象
+    val userAvatar: String? = null // 改为头像URL
 )
-
 enum class MarkerType {
     POI,        // 兴趣点
     USER,       // 用户位置

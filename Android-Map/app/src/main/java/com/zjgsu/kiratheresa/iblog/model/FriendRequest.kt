@@ -5,7 +5,7 @@ data class FriendRequest(
     val fromUserId: String,
     val toUserId: String,
     val message: String? = null,
-    val status: FriendRequestStatus = FriendRequestStatus.PENDING,
+    var status: FriendRequestStatus = FriendRequestStatus.PENDING,
     val timestamp: Long = System.currentTimeMillis()
 )
 

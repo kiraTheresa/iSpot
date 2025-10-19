@@ -10,10 +10,9 @@ import com.zjgsu.kiratheresa.iblog.model.LocationPoint
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import java.util.UUID
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import java.util.*
-
 
 class LocationService(private val context: Context) {
 
@@ -23,18 +22,18 @@ class LocationService(private val context: Context) {
     // 模拟用户ID（实际应该从登录信息获取）
     private val currentUserId = "user_001"
 
-    // 定位配置
+    // 定位配置 - 修正API调用方式
     private val locationOption by lazy {
         AMapLocationClientOption().apply {
-            AMapLocationClientOption.setLocationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-            AMapLocationClientOption.setOnceLocation = false
-            AMapLocationClientOption.setNeedAddress = true
-            AMapLocationClientOption.setMockEnable = true
-            AMapLocationClientOption.setInterval = 5000
-            AMapLocationClientOption.setSensorEnable = true
-            AMapLocationClientOption.setGpsFirst = true
-            AMapLocationClientOption.setHttpTimeOut = 30000
-            locationCacheEnable = true
+            locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+            isOnceLocation = false
+            isNeedAddress = true
+            isMockEnable = true
+            interval = 5000
+            isSensorEnable = true
+            isGpsFirst = true
+            httpTimeOut = 30000
+            isLocationCacheEnable = true
         }
     }
 
@@ -81,9 +80,9 @@ class LocationService(private val context: Context) {
     suspend fun getCurrentLocation(): LocationPoint = suspendCoroutine { continuation ->
         val singleLocationClient = AMapLocationClient(context.applicationContext).apply {
             setLocationOption(AMapLocationClientOption().apply {
-                AMapLocationClientOption.setLocationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-                AMapLocationClientOption.setOnceLocation = true
-                AMapLocationClientOption.setNeedAddress = true
+                locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+                isOnceLocation = true
+                isNeedAddress = true
             })
             setLocationListener(object : AMapLocationListener {
                 override fun onLocationChanged(aMapLocation: AMapLocation?) {
@@ -112,10 +111,9 @@ class LocationService(private val context: Context) {
 
     // 创建模拟位置（杭州西湖附近）
     private fun createMockLocation(): LocationPoint {
-        // 在西湖周围随机位置
         val baseLat = 30.2460
         val baseLng = 120.1377
-        val randomOffset = (Math.random() - 0.5) * 0.01 // 约±500米范围
+        val randomOffset = (Math.random() - 0.5) * 0.01
 
         return LocationPoint(
             id = UUID.randomUUID().toString(),

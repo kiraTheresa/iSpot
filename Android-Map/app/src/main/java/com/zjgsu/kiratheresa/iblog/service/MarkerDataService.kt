@@ -2,7 +2,6 @@ package com.zjgsu.kiratheresa.iblog.service
 
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
-import com.zjgsu.kiratheresa.iblog.model.User
 import java.util.UUID
 
 object MarkerDataService {
@@ -49,7 +48,7 @@ object MarkerDataService {
         )
     }
 
-    // 模拟好友位置标记点
+    // 模拟好友位置标记点 - 移除User对象引用
     fun getMockFriendMarkers(): List<MarkerInfo> {
         return listOf(
             MarkerInfo(
@@ -59,14 +58,7 @@ object MarkerDataService {
                 snippet = "在线 - 刚刚活跃",
                 lat = 30.2500,
                 lng = 120.1400,
-                type = MarkerType.FRIEND,
-                user = User(
-                    id = "user_friend_1",
-                    username = "xiaoming",
-                    nickname = "小明",
-                    avatarUrl = null,
-                    bio = "热爱旅行"
-                )
+                type = MarkerType.FRIEND
             ),
             MarkerInfo(
                 id = "friend_2",
@@ -75,14 +67,7 @@ object MarkerDataService {
                 snippet = "在线 - 5分钟前活跃",
                 lat = 30.2450,
                 lng = 120.1350,
-                type = MarkerType.FRIEND,
-                user = User(
-                    id = "user_friend_2",
-                    username = "xiaohong",
-                    nickname = "小红",
-                    avatarUrl = null,
-                    bio = "摄影爱好者"
-                )
+                type = MarkerType.FRIEND
             )
         )
     }
@@ -93,11 +78,12 @@ object MarkerDataService {
         snippet: String,
         lat: Double,
         lng: Double,
-        type: MarkerType = MarkerType.POI
+        type: MarkerType = MarkerType.POI,
+        userId: String = "current_user"
     ): MarkerInfo {
         return MarkerInfo(
             id = UUID.randomUUID().toString(),
-            userId = "current_user", // 当前用户ID
+            userId = userId,
             title = title,
             snippet = snippet,
             lat = lat,
