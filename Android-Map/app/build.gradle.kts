@@ -20,6 +20,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters.addAll(setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+        }
+
     }
 
     buildTypes {
@@ -61,7 +66,8 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
 
     // 高德地图整合包
-    implementation("com.amap.api:3dmap:latest.integration")
+//    implementation("com.amap.api:3dmap:latest.integration")
+    implementation("com.amap.api:3dmap:9.8.3")
 
     // Jetpack Compose BOM（版本统一管理）
     implementation(platform("androidx.compose:compose-bom:2024.10.00"))

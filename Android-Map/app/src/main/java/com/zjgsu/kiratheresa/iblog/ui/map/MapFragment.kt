@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
+import com.amap.api.maps.MapsInitializer
 import com.amap.api.maps.model.CameraPosition
 import com.amap.api.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,12 +43,21 @@ class MapFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        // ==== 加这一段 START ====
+        context?.let {
+            MapsInitializer.updatePrivacyShow(it, true, true)
+            MapsInitializer.updatePrivacyAgree(it, true)
+        }
+        // ==== 加这一段 END ====
+
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         initViews(view)
         setupMap(savedInstanceState)
         setupListeners()
         return view
     }
+
 
     private fun initViews(view: View) {
         mapView = view.findViewById(R.id.mapView)
