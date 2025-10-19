@@ -204,9 +204,16 @@ class MapFragment : Fragment() {
             onMapLongClick(latLng)
         }
 
-        aMap.setOnCameraChangeListener { position ->
-            currentZoomLevel = position.zoom
-        }
+        // 使用新的相机移动监听器
+        aMap.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
+            override fun onCameraChange(cameraPosition: CameraPosition) {
+                // 相机位置变化中
+            }
+
+            override fun onCameraChangeFinish(cameraPosition: CameraPosition) {
+                currentZoomLevel = cameraPosition.zoom
+            }
+        })
     }
 
     private fun setupListeners() {
