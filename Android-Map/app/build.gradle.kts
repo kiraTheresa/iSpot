@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -66,7 +67,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
 
     // 高德地图整合包
-//    implementation("com.amap.api:3dmap:latest.integration")
+    //    implementation("com.amap.api:3dmap:latest.integration")
     implementation("com.amap.api:3dmap:9.8.3")
 
     // Jetpack Compose BOM（版本统一管理）
@@ -82,6 +83,17 @@ dependencies {
 
     // Lifecycle (可选但推荐)
     implementation("androidx.lifecycle:lifecycle-runtime-compose")
+
+    // Room 数据库
+    implementation("androidx.room:room-runtime:2.4.1")
+    implementation("androidx.room:room-ktx:2.4.1")
+    kapt("androidx.room:room-compiler:2.4.1")
+
+    // 协程
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
+    // 权限管理
+    implementation("com.guolindev.permissionx:permissionx:1.6.4")
 
 
 
