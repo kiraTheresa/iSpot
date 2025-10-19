@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.adapter
+package com.zjgsu.kiratheresa.iblog.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,7 @@ import android.view.View
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.Marker
 import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.databinding.LayoutSocialInfoWindowBinding
-import com.zjgsu.kiratheresa.iblog.model.MarkerType
+import com.zjgsu.kiratheresa.iblog.manager.SocialMarkerManager
 import com.zjgsu.kiratheresa.iblog.model.User
 import com.zjgsu.kiratheresa.iblog.service.SocialService
 

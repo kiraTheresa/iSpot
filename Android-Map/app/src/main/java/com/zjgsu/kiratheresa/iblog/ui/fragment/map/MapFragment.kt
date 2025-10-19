@@ -1,6 +1,5 @@
-package com.zjgsu.kiratheresa.iblog.ui.map
+package com.zjgsu.kiratheresa.iblog.ui.fragment.map
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,29 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.amap.api.maps.AMap
-import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
-import com.amap.api.maps.model.*
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.Marker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.adapter.CustomInfoWindowAdapter
-import com.zjgsu.kiratheresa.iblog.adapter.SocialInfoWindowAdapter
+import com.zjgsu.kiratheresa.iblog.ui.adapter.CustomInfoWindowAdapter
+import com.zjgsu.kiratheresa.iblog.ui.adapter.SocialInfoWindowAdapter
 import com.zjgsu.kiratheresa.iblog.manager.MarkerManager
 import com.zjgsu.kiratheresa.iblog.manager.SocialMarkerManager
-import com.zjgsu.kiratheresa.iblog.manager.TrajectoryManager
+import com.zjgsu.kiratheresa.iblog.model.LocationPoint
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
+import com.zjgsu.kiratheresa.iblog.model.Post
 import com.zjgsu.kiratheresa.iblog.model.User
-import com.zjgsu.kiratheresa.iblog.service.LocationService
 import com.zjgsu.kiratheresa.iblog.service.MarkerDataService
 import com.zjgsu.kiratheresa.iblog.service.SocialService
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
+import com.zjgsu.kiratheresa.iblog.service.LocationService
+import com.zjgsu.kiratheresa.iblog.manager.TrajectoryManager
+import kotlinx.coroutines.Job
 
 class MapFragment : Fragment() {
 
@@ -69,7 +66,7 @@ class MapFragment : Fragment() {
     private var isMapInitialized = false
     private var isTracking = false
     private var currentLocationMarker: Marker? = null
-    private var locationUpdatesJob: kotlinx.coroutines.Job? = null
+    private var locationUpdatesJob: Job? = null
     private var currentMode: MapMode = MapMode.NORMAL
 
     enum class MapMode {

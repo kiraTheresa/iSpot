@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog
+package com.zjgsu.kiratheresa.iblog.utils
 
 import android.app.Application
 import com.amap.api.maps.MapsInitializer

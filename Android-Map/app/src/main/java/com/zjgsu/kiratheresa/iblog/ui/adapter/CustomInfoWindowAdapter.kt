@@ -1,12 +1,10 @@
-package com.zjgsu.kiratheresa.iblog.adapter
+package com.zjgsu.kiratheresa.iblog.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.Marker
-import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.databinding.LayoutCustomInfoWindowBinding
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
 

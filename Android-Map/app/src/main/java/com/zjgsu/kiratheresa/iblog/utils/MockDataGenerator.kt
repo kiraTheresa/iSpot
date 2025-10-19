@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.ui.map
+package com.zjgsu.kiratheresa.iblog.utils
 
 import com.zjgsu.kiratheresa.iblog.model.LocationPoint
 import com.zjgsu.kiratheresa.iblog.model.User

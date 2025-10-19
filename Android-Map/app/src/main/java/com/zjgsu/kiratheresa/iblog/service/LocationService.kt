@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.ui.map
+package com.zjgsu.kiratheresa.iblog.service
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -26,14 +26,14 @@ class LocationService(private val context: Context) {
     // 定位配置
     private val locationOption by lazy {
         AMapLocationClientOption().apply {
-            locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-            isOnceLocation = false
-            isNeedAddress = true
-            isMockEnable = true
-            interval = 5000
-            isSensorEnable = true
-            isGpsFirst = true
-            httpTimeOut = 30000
+            AMapLocationClientOption.setLocationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+            AMapLocationClientOption.setOnceLocation = false
+            AMapLocationClientOption.setNeedAddress = true
+            AMapLocationClientOption.setMockEnable = true
+            AMapLocationClientOption.setInterval = 5000
+            AMapLocationClientOption.setSensorEnable = true
+            AMapLocationClientOption.setGpsFirst = true
+            AMapLocationClientOption.setHttpTimeOut = 30000
             locationCacheEnable = true
         }
     }
@@ -81,9 +81,9 @@ class LocationService(private val context: Context) {
     suspend fun getCurrentLocation(): LocationPoint = suspendCoroutine { continuation ->
         val singleLocationClient = AMapLocationClient(context.applicationContext).apply {
             setLocationOption(AMapLocationClientOption().apply {
-                locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-                isOnceLocation = true
-                isNeedAddress = true
+                AMapLocationClientOption.setLocationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+                AMapLocationClientOption.setOnceLocation = true
+                AMapLocationClientOption.setNeedAddress = true
             })
             setLocationListener(object : AMapLocationListener {
                 override fun onLocationChanged(aMapLocation: AMapLocation?) {

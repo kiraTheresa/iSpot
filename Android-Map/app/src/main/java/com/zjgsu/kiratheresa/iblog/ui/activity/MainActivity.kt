@@ -1,8 +1,9 @@
-package com.zjgsu.kiratheresa.iblog
+package com.zjgsu.kiratheresa.iblog.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.zjgsu.kiratheresa.iblog.ui.map.MapFragment
+import com.zjgsu.kiratheresa.iblog.R
+import com.zjgsu.kiratheresa.iblog.ui.fragment.map.MapFragment
 
 class MainActivity : AppCompatActivity() {
 
