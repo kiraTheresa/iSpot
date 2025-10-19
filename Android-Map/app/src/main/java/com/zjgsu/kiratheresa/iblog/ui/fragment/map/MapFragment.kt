@@ -1,5 +1,6 @@
 package com.zjgsu.kiratheresa.iblog.ui.fragment.map
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.amap.api.maps.AMap
+import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Marker
+import com.amap.api.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zjgsu.kiratheresa.iblog.R
 import com.zjgsu.kiratheresa.iblog.ui.adapter.CustomInfoWindowAdapter
 import com.zjgsu.kiratheresa.iblog.ui.adapter.SocialInfoWindowAdapter
 import com.zjgsu.kiratheresa.iblog.manager.MarkerManager
 import com.zjgsu.kiratheresa.iblog.manager.SocialMarkerManager
+import com.zjgsu.kiratheresa.iblog.manager.TrajectoryManager
 import com.zjgsu.kiratheresa.iblog.model.LocationPoint
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
@@ -26,8 +32,11 @@ import com.zjgsu.kiratheresa.iblog.model.User
 import com.zjgsu.kiratheresa.iblog.service.MarkerDataService
 import com.zjgsu.kiratheresa.iblog.service.SocialService
 import com.zjgsu.kiratheresa.iblog.service.LocationService
-import com.zjgsu.kiratheresa.iblog.manager.TrajectoryManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 
 class MapFragment : Fragment() {
 
@@ -69,11 +78,10 @@ class MapFragment : Fragment() {
     private var locationUpdatesJob: Job? = null
     private var currentMode: MapMode = MapMode.NORMAL
 
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
     enum class MapMode {
-        NORMAL,     // 普通模式
-        FRIENDS,    // 好友模式
-        NEARBY,     // 附近的人模式
-        REQUESTS    // 好友请求模式
+        NORMAL, FRIENDS, NEARBY, REQUESTS
     }
 
     override fun onCreateView(
@@ -112,7 +120,6 @@ class MapFragment : Fragment() {
         markerManager = MarkerManager(aMap)
         socialMarkerManager = SocialMarkerManager(aMap)
 
-        // 设置信息窗口适配器
         infoWindowAdapter = CustomInfoWindowAdapter(
             context = requireContext(),
             aMap = aMap,
@@ -148,37 +155,32 @@ class MapFragment : Fragment() {
 
     private fun setupMarkerListeners() {
         markerManager.setOnMarkerClickListener { markerInfo ->
-            false // 允许显示信息窗口
+            false
         }
 
         markerManager.setOnInfoWindowClickListener { markerInfo ->
             onMarkerInfoWindowClick(markerInfo)
         }
 
-        // 设置社交标记点点击监听
         aMap.setOnMarkerClickListener { marker ->
-            val user = socialMarkerManager.getUserByMarker(marker)
-            if (user != null) {
-                // 切换到社交信息窗口
+            val userId = socialMarkerManager.getUserByMarker(marker)
+            if (userId != null) {
                 aMap.setInfoWindowAdapter(socialInfoWindowAdapter)
                 marker.showInfoWindow()
-                true // 消费点击事件
+                true
             } else {
-                // 使用普通信息窗口
                 aMap.setInfoWindowAdapter(infoWindowAdapter)
-                false // 继续默认处理
+                false
             }
         }
     }
 
     private fun setupMap(savedInstanceState: Bundle?) {
         mapView.onCreate(savedInstanceState)
-
         aMap = mapView.map ?: return
 
         configureMapSettings()
         moveToLocation(DEFAULT_LOCATION, DEFAULT_ZOOM_LEVEL)
-
         isMapInitialized = true
     }
 
@@ -187,7 +189,6 @@ class MapFragment : Fragment() {
         aMap.uiSettings.isCompassEnabled = true
         aMap.uiSettings.isScaleControlsEnabled = true
         aMap.uiSettings.isMyLocationButtonEnabled = false
-
         aMap.mapType = AMap.MAP_TYPE_NORMAL
         aMap.isMyLocationEnabled = true
 
@@ -227,6 +228,7 @@ class MapFragment : Fragment() {
     }
 
     private fun loadInitialData() {
+        showPoiMarkers()
         updateSocialInfo()
     }
 
@@ -237,7 +239,6 @@ class MapFragment : Fragment() {
 
         val poiMarkers = MarkerDataService.getMockMarkers()
         markerManager.addMarkers(poiMarkers)
-
         tvSocialInfo.text = "显示兴趣点"
     }
 
@@ -248,7 +249,6 @@ class MapFragment : Fragment() {
 
         val friendMarkers = socialMarkerManager.showFriendLocations()
         updateSocialInfo()
-
         tvSocialInfo.text = "好友在线: ${friendMarkers.size}人"
     }
 
@@ -259,7 +259,6 @@ class MapFragment : Fragment() {
 
         val nearbyMarkers = socialMarkerManager.showNearbyUsers()
         updateSocialInfo()
-
         tvSocialInfo.text = "附近用户: ${nearbyMarkers.size}人"
     }
 
@@ -270,7 +269,6 @@ class MapFragment : Fragment() {
 
         val requestMarkers = socialMarkerManager.showFriendRequestUsers()
         updateSocialInfo()
-
         tvSocialInfo.text = "好友请求: ${requestMarkers.size}个"
     }
 
@@ -283,8 +281,7 @@ class MapFragment : Fragment() {
         val friendsCount = SocialService.getFriends().size
         val nearbyCount = SocialService.getNearbyUsers().size
         val requestsCount = SocialService.getFriendRequests().size
-
-        // 可以更新UI显示社交统计信息
+        // 可以更新其他UI显示社交统计信息
     }
 
     private fun addMarkerAtCenter() {
@@ -306,65 +303,142 @@ class MapFragment : Fragment() {
     // 社交互动方法
     private fun onViewUserProfile(user: User) {
         SocialService.viewUserProfile(user.id)
-        // 跳转到用户详情页
-        navigateToUserDetail(user.id)
+        Toast.makeText(requireContext(), "查看用户资料: ${user.nickname}", Toast.LENGTH_SHORT).show()
     }
 
     private fun onSendMessageToUser(user: User) {
-        // 跳转到聊天页面
-        navigateToChat(user.id)
+        Toast.makeText(requireContext(), "发送消息给: ${user.nickname}", Toast.LENGTH_SHORT).show()
     }
 
     private fun onAddFriend(user: User) {
-        val success = SocialService.sendFriendRequest(user.id, "你好，我是通过地图发现你的，交个朋友吧！")
+        val success = SocialService.sendFriendRequest(user.id, "你好，交个朋友吧！")
         if (success) {
-            // 显示成功提示
+            Toast.makeText(requireContext(), "好友请求已发送给 ${user.nickname}", Toast.LENGTH_SHORT).show()
             tvSocialInfo.text = "好友请求已发送给 ${user.nickname ?: user.username}"
         }
     }
 
     private fun onViewUserPosts(user: User) {
         val posts = SocialService.getUserPosts(user.id)
-        // 跳转到用户动态页面
-        navigateToUserPosts(user.id, posts)
+        Toast.makeText(requireContext(), "查看用户动态: ${posts.size}条", Toast.LENGTH_SHORT).show()
     }
 
-    private fun navigateToUserDetail(userId: String) {
-        // 实现跳转到用户详情页的逻辑
-        // startActivity(Intent(requireContext(), UserDetailActivity::class.java).apply {
-        //     putExtra("USER_ID", userId)
-        // })
+    // 地图操作方法
+    private fun onMapClick(latLng: LatLng) {
+        // 地图点击处理
     }
 
-    private fun navigateToChat(userId: String) {
-        // 实现跳转到聊天页面的逻辑
-        // startActivity(Intent(requireContext(), ChatActivity::class.java).apply {
-        //     putExtra("TARGET_USER_ID", userId)
-        // })
+    private fun onMapLongClick(latLng: LatLng) {
+        // 地图长按处理
     }
 
-    private fun navigateToUserPosts(userId: String, posts: List<Post>) {
-        // 实现跳转到用户动态页面的逻辑
-        // startActivity(Intent(requireContext(), UserPostsActivity::class.java).apply {
-        //     putExtra("USER_ID", userId)
-        //     putExtra("POSTS", ArrayList(posts))
-        // })
+    private fun onNavigateToMarker(markerInfo: MarkerInfo) {
+        Toast.makeText(requireContext(), "导航到: ${markerInfo.title}", Toast.LENGTH_SHORT).show()
     }
 
-    // 原有的地图方法保持不变...
-    private fun onMapClick(latLng: LatLng) {}
-    private fun onMapLongClick(latLng: LatLng) {}
-    private fun onNavigateToMarker(markerInfo: MarkerInfo) {}
-    private fun onMarkerDetailClick(markerInfo: MarkerInfo) {}
-    private fun onMarkerInfoWindowClick(markerInfo: MarkerInfo) {}
-    private fun startTracking() {}
-    private fun stopTracking() {}
-    private fun updateCurrentLocation(location: LocationPoint) {}
-    private fun requestLocationPermissionAndMove() {}
-    private fun moveToCurrentLocation() {}
-    private fun moveToLocation(latLng: LatLng, zoomLevel: Float) {}
-    private fun zoomIn() {}
-    private fun zoomOut() {}
+    private fun onMarkerDetailClick(markerInfo: MarkerInfo) {
+        Toast.makeText(requireContext(), "查看详情: ${markerInfo.title}", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onMarkerInfoWindowClick(markerInfo: MarkerInfo) {
+        // 信息窗口点击处理
+    }
+
+    private fun startTracking() {
+        if (checkLocationPermission()) {
+            isTracking = true
+            trajectoryManager.startNewTrajectory()
+            startLocationUpdates()
+            btnStartTracking.isEnabled = false
+            btnStopTracking.isEnabled = true
+            tvTrackInfo.text = "轨迹记录中..."
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun stopTracking() {
+        isTracking = false
+        stopLocationUpdates()
+        btnStartTracking.isEnabled = true
+        btnStopTracking.isEnabled = false
+        val distance = trajectoryManager.getTrajectoryDistance()
+        tvTrackInfo.text = "轨迹长度: ${"%.2f".format(distance / 1000)} km"
+    }
+
+    private fun startLocationUpdates() {
+        locationUpdatesJob = coroutineScope.launch {
+            locationService.startLocationUpdates().collect { location ->
+                updateCurrentLocation(location)
+            }
+        }
+    }
+
+    private fun stopLocationUpdates() {
+        locationUpdatesJob?.cancel()
+        locationService.stopLocationUpdates()
+    }
+
+    private fun updateCurrentLocation(location: LocationPoint) {
+        if (isTracking) {
+            trajectoryManager.addLocationToTrajectory(location)
+        }
+        // 更新当前位置标记
+        currentLocationMarker?.remove()
+        val latLng = LatLng(location.lat, location.lng)
+        currentLocationMarker = aMap.addMarker(
+            MarkerOptions().position(latLng).title("我的位置")
+        )
+    }
+
+    private fun requestLocationPermissionAndMove() {
+        if (checkLocationPermission()) {
+            moveToCurrentLocation()
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun moveToCurrentLocation() {
+        coroutineScope.launch {
+            try {
+                val location = locationService.getCurrentLocation()
+                val latLng = LatLng(location.lat, location.lng)
+                moveToLocation(latLng, DEFAULT_ZOOM_LEVEL)
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "获取位置失败", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun moveToLocation(latLng: LatLng, zoomLevel: Float) {
+        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+    }
+
+    private fun zoomIn() {
+        currentZoomLevel = (currentZoomLevel + 1).coerceAtMost(20f)
+        aMap.animateCamera(CameraUpdateFactory.zoomTo(currentZoomLevel))
+    }
+
+    private fun zoomOut() {
+        currentZoomLevel = (currentZoomLevel - 1).coerceAtLeast(3f)
+        aMap.animateCamera(CameraUpdateFactory.zoomTo(currentZoomLevel))
+    }
+
+    private fun checkLocationPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -378,6 +452,8 @@ class MapFragment : Fragment() {
                 if (isTracking) {
                     startTracking()
                 }
+            } else {
+                Toast.makeText(requireContext(), "需要位置权限才能使用此功能", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -401,8 +477,6 @@ class MapFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         stopLocationUpdates()
-        infoWindowAdapter.destroy()
-        socialInfoWindowAdapter.destroy()
         mapView.onDestroy()
     }
 

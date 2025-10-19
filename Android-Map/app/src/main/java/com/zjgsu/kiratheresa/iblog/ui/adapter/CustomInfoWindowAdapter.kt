@@ -3,8 +3,12 @@ package com.zjgsu.kiratheresa.iblog.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.Marker
+import com.zjgsu.kiratheresa.iblog.R
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
 
@@ -15,8 +19,6 @@ class CustomInfoWindowAdapter(
     private val onDetailClick: (MarkerInfo) -> Unit
 ) : AMap.InfoWindowAdapter {
 
-    private var binding: LayoutCustomInfoWindowBinding? = null
-
     override fun getInfoWindow(marker: Marker): View {
         return createView(marker)
     }
@@ -26,20 +28,17 @@ class CustomInfoWindowAdapter(
     }
 
     private fun createView(marker: Marker): View {
-        val binding = LayoutCustomInfoWindowBinding.inflate(
-            LayoutInflater.from(context)
-        )
-        this.binding = binding
+        val view = LayoutInflater.from(context).inflate(R.layout.layout_custom_info_window, null)
 
-        // 获取标记点信息（这里需要从标记点中提取或通过其他方式获取）
+        // 获取标记点信息
         val markerInfo = getMarkerInfoFromMarker(marker)
 
         markerInfo?.let { info ->
-            bindData(binding, info)
-            setupClickListeners(binding, info)
+            bindData(view, info)
+            setupClickListeners(view, info, marker) // 传递 marker 参数
         }
 
-        return binding.root
+        return view
     }
 
     private fun getMarkerInfoFromMarker(marker: Marker): MarkerInfo? {
@@ -56,61 +55,57 @@ class CustomInfoWindowAdapter(
         )
     }
 
-    private fun bindData(binding: LayoutCustomInfoWindowBinding, markerInfo: MarkerInfo) {
-        binding.tvTitle.text = markerInfo.title
-        binding.tvSnippet.text = markerInfo.snippet ?: "暂无描述"
+    private fun bindData(view: View, markerInfo: MarkerInfo) {
+        val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
+        val tvSnippet = view.findViewById<TextView>(R.id.tvSnippet)
+        val layoutUserInfo = view.findViewById<LinearLayout>(R.id.layoutUserInfo)
+        val tvUsername = view.findViewById<TextView>(R.id.tvUsername)
+        val btnDetail = view.findViewById<Button>(R.id.btnDetail)
+
+        tvTitle.text = markerInfo.title
+        tvSnippet.text = markerInfo.snippet ?: "暂无描述"
 
         // 根据标记点类型显示不同的用户信息
         when (markerInfo.type) {
             MarkerType.USER, MarkerType.FRIEND -> {
-                binding.layoutUserInfo.visibility = View.VISIBLE
-                markerInfo.user?.let { user ->
-                    binding.tvUsername.text = user.nickname ?: user.username
-                    // 这里可以加载用户头像
-                }
+                layoutUserInfo.visibility = View.VISIBLE
+                // 这里可以设置用户信息
+                tvUsername.text = "用户信息"
             }
             else -> {
-                binding.layoutUserInfo.visibility = View.GONE
+                layoutUserInfo.visibility = View.GONE
             }
         }
 
         // 根据类型设置不同的按钮文本
         when (markerInfo.type) {
             MarkerType.USER, MarkerType.FRIEND -> {
-                binding.btnDetail.text = "查看资料"
+                btnDetail.text = "查看资料"
             }
             MarkerType.CHECK_IN -> {
-                binding.btnDetail.text = "查看动态"
+                btnDetail.text = "查看动态"
             }
             MarkerType.COLLECTION -> {
-                binding.btnDetail.text = "查看详情"
+                btnDetail.text = "查看详情"
             }
             else -> {
-                binding.btnDetail.text = "详情"
+                btnDetail.text = "详情"
             }
         }
     }
 
-    private fun setupClickListeners(binding: LayoutCustomInfoWindowBinding, markerInfo: MarkerInfo) {
-        binding.btnNavigate.setOnClickListener {
+    private fun setupClickListeners(view: View, markerInfo: MarkerInfo, marker: Marker) {
+        val btnNavigate = view.findViewById<Button>(R.id.btnNavigate)
+        val btnDetail = view.findViewById<Button>(R.id.btnDetail)
+
+        btnNavigate.setOnClickListener {
             onNavigateClick(markerInfo)
-            // 关闭信息窗口
-            aMap.hideInfoWindow()
+            marker.hideInfoWindow() // 修正：在 marker 上调用
         }
 
-        binding.btnDetail.setOnClickListener {
+        btnDetail.setOnClickListener {
             onDetailClick(markerInfo)
-            // 关闭信息窗口
-            aMap.hideInfoWindow()
+            marker.hideInfoWindow() // 修正：在 marker 上调用
         }
-
-        // 整个信息窗口的点击事件
-        binding.root.setOnClickListener {
-            // 防止点击信息窗口时触发地图点击事件
-        }
-    }
-
-    fun destroy() {
-        binding = null
     }
 }
