@@ -37,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import com.amap.api.maps.model.CameraPosition
 
 class MapFragment : Fragment() {
 
