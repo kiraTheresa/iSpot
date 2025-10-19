@@ -13,13 +13,13 @@ class MarkerManager(private val aMap: AMap) {
     private val markers = mutableMapOf<String, Marker>()
     private val markerInfoMap = mutableMapOf<String, MarkerInfo>()
 
-    // 标记点图标配置
+    // 标记点图标配置 - 使用默认图标
     private val markerIcons = mapOf(
-        MarkerType.POI to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_poi),
-        MarkerType.USER to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user),
-        MarkerType.CHECK_IN to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_checkin),
-        MarkerType.FRIEND to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_friend),
-        MarkerType.COLLECTION to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_collection)
+        MarkerType.POI to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED),
+        MarkerType.USER to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE),
+        MarkerType.CHECK_IN to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+        MarkerType.FRIEND to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE),
+        MarkerType.COLLECTION to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)
     )
 
     fun addMarker(markerInfo: MarkerInfo): Marker {

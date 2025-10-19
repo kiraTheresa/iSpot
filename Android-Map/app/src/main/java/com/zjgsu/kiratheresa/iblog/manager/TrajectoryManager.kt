@@ -1,7 +1,5 @@
 package com.zjgsu.kiratheresa.iblog.manager
 
-
-import android.location.Location
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Polyline
@@ -74,7 +72,7 @@ class TrajectoryManager(private val aMap: AMap) {
 
     private fun calculateDistance(point1: LatLng, point2: LatLng): Float {
         val results = FloatArray(1)
-        Location.distanceBetween(
+        android.location.Location.distanceBetween(
             point1.latitude,
             point1.longitude,
             point2.latitude,

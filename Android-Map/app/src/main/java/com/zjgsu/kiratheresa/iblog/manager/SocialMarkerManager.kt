@@ -7,7 +7,6 @@ import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.MarkerOptions
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
-import com.zjgsu.kiratheresa.iblog.model.User
 import com.zjgsu.kiratheresa.iblog.service.SocialService
 
 class SocialMarkerManager(private val aMap: AMap) {
@@ -15,11 +14,11 @@ class SocialMarkerManager(private val aMap: AMap) {
     private val socialMarkers = mutableMapOf<String, Marker>()
     private val userMarkerMap = mutableMapOf<String, String>() // userId -> markerId
 
-    // 社交标记点图标
+    // 社交标记点图标 - 使用默认图标
     private val socialMarkerIcons = mapOf(
-        "friend" to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_friend),
-        "nearby_user" to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_nearby),
-        "friend_request" to BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_request)
+        "friend" to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE),
+        "nearby_user" to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE),
+        "friend_request" to BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)
     )
 
     // 显示好友位置
@@ -39,8 +38,7 @@ class SocialMarkerManager(private val aMap: AMap) {
                         snippet = "好友 - ${friend.bio ?: "暂无简介"}",
                         lat = lat,
                         lng = lng,
-                        type = MarkerType.FRIEND,
-                        user = friend
+                        type = MarkerType.FRIEND
                     )
 
                     addSocialMarker(markerInfo, "friend")
@@ -70,8 +68,7 @@ class SocialMarkerManager(private val aMap: AMap) {
                         snippet = "附近用户 - ${user.bio ?: "快来打个招呼吧"}",
                         lat = lat,
                         lng = lng,
-                        type = MarkerType.USER,
-                        user = user
+                        type = MarkerType.USER
                     )
 
                     addSocialMarker(markerInfo, "nearby_user")
@@ -106,8 +103,7 @@ class SocialMarkerManager(private val aMap: AMap) {
                             snippet = "好友请求: ${request.message ?: "想添加你为好友"}",
                             lat = lat,
                             lng = lng,
-                            type = MarkerType.USER,
-                            user = user
+                            type = MarkerType.USER
                         )
 
                         addSocialMarker(markerInfo, "friend_request")
@@ -140,14 +136,10 @@ class SocialMarkerManager(private val aMap: AMap) {
         userMarkerMap.clear()
     }
 
-    fun getUserByMarker(marker: Marker): User? {
+    fun getUserByMarker(marker: Marker): String? {
         val markerId = socialMarkers.entries.find { it.value == marker }?.key
         return markerId?.let { id ->
-            // 从所有用户中查找
-            val allUsers = SocialService.getFriends() + SocialService.getNearbyUsers()
-            allUsers.find { user ->
-                userMarkerMap[user.id] == id
-            }
+            userMarkerMap.entries.find { it.value == id }?.key
         }
     }
 
