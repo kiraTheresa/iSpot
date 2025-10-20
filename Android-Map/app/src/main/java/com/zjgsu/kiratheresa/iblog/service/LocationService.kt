@@ -16,6 +16,8 @@ import kotlin.coroutines.suspendCoroutine
 
 class LocationService(private val context: Context) {
 
+    // 添加初始化状态
+    private var isInitialized = false
     private var locationClient: AMapLocationClient? = null
     private var isLocationStarted = false
 
@@ -27,6 +29,14 @@ class LocationService(private val context: Context) {
         // 将原来的初始化代码移到这里
 
 
+    }
+
+    private fun ensureInitialized() {
+        if (!isInitialized) {
+            // 延迟初始化关键组件
+            initLocationClient()
+            isInitialized = true
+        }
     }
 
     // 定位配置 - 修正API调用方式
@@ -46,6 +56,7 @@ class LocationService(private val context: Context) {
 
     @SuppressLint("MissingPermission")
     fun startLocationUpdates(): Flow<LocationPoint> = callbackFlow {
+        ensureInitialized() // 确保已初始化
         if (isLocationStarted) {
             return@callbackFlow
         }
@@ -85,6 +96,7 @@ class LocationService(private val context: Context) {
 
     @SuppressLint("MissingPermission")
     suspend fun getCurrentLocation(): LocationPoint = suspendCoroutine { continuation ->
+        ensureInitialized() // 确保已初始化
         val singleLocationClient = AMapLocationClient(context.applicationContext).apply {
             setLocationOption(AMapLocationClientOption().apply {
                 locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
