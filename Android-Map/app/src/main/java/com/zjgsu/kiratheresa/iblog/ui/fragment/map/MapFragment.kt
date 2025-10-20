@@ -3,6 +3,7 @@ package com.zjgsu.kiratheresa.iblog.ui.fragment.map
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,9 +92,8 @@ class MapFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_map_social, container, false)
         initViews(view)
         setupMap(savedInstanceState)
-        setupManagers()
+//        setupManagers()
         setupListeners()
-        // loadInitialData() 已移到地图加载完成后执行
         return view
     }
 
@@ -113,9 +113,17 @@ class MapFragment : Fragment() {
         tvSocialInfo = view.findViewById(R.id.tvSocialInfo)
     }
 
+
+    // 添加延迟初始化
+    private fun initializeLocationService() {
+        if (!this::locationService.isInitialized) {
+            locationService = LocationService(requireContext())
+        }
+    }
+
     private fun setupManagers() {
         trajectoryManager = TrajectoryManager(aMap)
-        locationService = LocationService(requireContext())
+//        locationService = LocationService(requireContext())
         markerManager = MarkerManager(aMap)
         socialMarkerManager = SocialMarkerManager(aMap)
 
@@ -148,7 +156,6 @@ class MapFragment : Fragment() {
             }
         )
 
-        // 注意：setInfoWindowAdapter 和 setupMarkerListeners 已移到地图加载完成后
     }
 
     private fun setupMarkerListeners() {
@@ -173,24 +180,31 @@ class MapFragment : Fragment() {
         }
     }
 
+    // 在地图加载完成后初始化管理器
     private fun setupMap(savedInstanceState: Bundle?) {
-        mapView.onCreate(savedInstanceState)
-        aMap = mapView.map ?: return
 
-        configureMapSettings()
-        moveToLocation(DEFAULT_LOCATION, DEFAULT_ZOOM_LEVEL)
+        try {
+            mapView.onCreate(savedInstanceState)
+            aMap = mapView.map ?: return
 
-        // ✅ 关键修复：在地图加载完成后再设置 Adapter 和加载数据
-        aMap.setOnMapLoadedListener {
-            // 安全设置 InfoWindowAdapter
-            aMap.setInfoWindowAdapter(infoWindowAdapter)
-            setupMarkerListeners()
+            // 其余初始化代码...
+            configureMapSettings()
+            moveToLocation(DEFAULT_LOCATION, DEFAULT_ZOOM_LEVEL)
 
-            // 安全加载初始数据
-            loadInitialData()
+            aMap.setOnMapLoadedListener {
+                // 在地图完全加载后初始化管理器
+                setupManagers()
+                aMap.setInfoWindowAdapter(infoWindowAdapter)
+                setupMarkerListeners()
+                loadInitialData()
+                isMapInitialized = true
+            }
 
-            isMapInitialized = true
+        } catch (e: Exception) {
+            Log.e("MapFragment", "地图初始化失败", e)
+            Toast.makeText(requireContext(), "地图初始化失败，请重试", Toast.LENGTH_LONG).show()
         }
+
     }
 
     private fun configureMapSettings() {
@@ -360,8 +374,10 @@ class MapFragment : Fragment() {
         // 信息窗口点击处理
     }
 
+    // 在需要使用时才初始化
     private fun startTracking() {
         if (checkLocationPermission()) {
+            initializeLocationService() // 确保在使用前初始化
             isTracking = true
             trajectoryManager.startNewTrajectory()
             startLocationUpdates()
@@ -416,6 +432,7 @@ class MapFragment : Fragment() {
     }
 
     private fun moveToCurrentLocation() {
+        initializeLocationService() // 确保在使用前初始化
         coroutineScope.launch {
             try {
                 val location = locationService.getCurrentLocation()

@@ -22,6 +22,13 @@ class LocationService(private val context: Context) {
     // 模拟用户ID（实际应该从登录信息获取）
     private val currentUserId = "user_001"
 
+
+    private fun initLocationClient() {
+        // 将原来的初始化代码移到这里
+
+
+    }
+
     // 定位配置 - 修正API调用方式
     private val locationOption by lazy {
         AMapLocationClientOption().apply {
