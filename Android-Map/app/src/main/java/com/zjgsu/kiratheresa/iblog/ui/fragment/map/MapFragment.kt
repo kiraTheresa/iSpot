@@ -14,30 +14,28 @@ import androidx.fragment.app.Fragment
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
+import com.amap.api.maps.model.CameraPosition
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.ui.adapter.CustomInfoWindowAdapter
-import com.zjgsu.kiratheresa.iblog.ui.adapter.SocialInfoWindowAdapter
 import com.zjgsu.kiratheresa.iblog.manager.MarkerManager
 import com.zjgsu.kiratheresa.iblog.manager.SocialMarkerManager
 import com.zjgsu.kiratheresa.iblog.manager.TrajectoryManager
 import com.zjgsu.kiratheresa.iblog.model.LocationPoint
 import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
 import com.zjgsu.kiratheresa.iblog.model.MarkerType
-import com.zjgsu.kiratheresa.iblog.model.Post
 import com.zjgsu.kiratheresa.iblog.model.User
+import com.zjgsu.kiratheresa.iblog.service.LocationService
 import com.zjgsu.kiratheresa.iblog.service.MarkerDataService
 import com.zjgsu.kiratheresa.iblog.service.SocialService
-import com.zjgsu.kiratheresa.iblog.service.LocationService
+import com.zjgsu.kiratheresa.iblog.ui.adapter.CustomInfoWindowAdapter
+import com.zjgsu.kiratheresa.iblog.ui.adapter.SocialInfoWindowAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collect
-import com.amap.api.maps.model.CameraPosition
 
 class MapFragment : Fragment() {
 
@@ -95,7 +93,7 @@ class MapFragment : Fragment() {
         setupMap(savedInstanceState)
         setupManagers()
         setupListeners()
-        loadInitialData()
+        // loadInitialData() 已移到地图加载完成后执行
         return view
     }
 
@@ -150,8 +148,7 @@ class MapFragment : Fragment() {
             }
         )
 
-        aMap.setInfoWindowAdapter(infoWindowAdapter)
-        setupMarkerListeners()
+        // 注意：setInfoWindowAdapter 和 setupMarkerListeners 已移到地图加载完成后
     }
 
     private fun setupMarkerListeners() {
@@ -182,7 +179,18 @@ class MapFragment : Fragment() {
 
         configureMapSettings()
         moveToLocation(DEFAULT_LOCATION, DEFAULT_ZOOM_LEVEL)
-        isMapInitialized = true
+
+        // ✅ 关键修复：在地图加载完成后再设置 Adapter 和加载数据
+        aMap.setOnMapLoadedListener {
+            // 安全设置 InfoWindowAdapter
+            aMap.setInfoWindowAdapter(infoWindowAdapter)
+            setupMarkerListeners()
+
+            // 安全加载初始数据
+            loadInitialData()
+
+            isMapInitialized = true
+        }
     }
 
     private fun configureMapSettings() {

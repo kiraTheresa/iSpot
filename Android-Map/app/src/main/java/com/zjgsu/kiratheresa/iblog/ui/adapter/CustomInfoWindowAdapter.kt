@@ -24,36 +24,33 @@ class CustomInfoWindowAdapter(
     }
 
     override fun getInfoContents(marker: Marker): View? {
-        return null // 返回null表示使用getInfoWindow
+        return null // 返回null表示使用getInfoWindow // error
     }
 
     private fun createView(marker: Marker): View {
         val view = LayoutInflater.from(context).inflate(R.layout.layout_custom_info_window, null)
+        val info = getMarkerInfoFromMarker(marker) ?: return view  // 无数据就返回空布局
 
-        // 获取标记点信息
-        val markerInfo = getMarkerInfoFromMarker(marker)
-
-        markerInfo?.let { info ->
-            bindData(view, info)
-            setupClickListeners(view, info, marker) // 传递 marker 参数
-        }
-
+        bindData(view, info)
+        setupClickListeners(view, info, marker)
         return view
     }
 
+
     private fun getMarkerInfoFromMarker(marker: Marker): MarkerInfo? {
-        // 这里应该从你的数据源中根据标记点获取对应的MarkerInfo
-        // 暂时返回一个模拟数据
+        val pos = marker.position ?: return null   // ← 关键安全检查
+
         return MarkerInfo(
             id = marker.id,
             userId = "user_${marker.id}",
             title = marker.title ?: "未知位置",
             snippet = marker.snippet,
-            lat = marker.position.latitude,
-            lng = marker.position.longitude,
+            lat = pos.latitude,
+            lng = pos.longitude,
             type = MarkerType.POI
         )
     }
+
 
     private fun bindData(view: View, markerInfo: MarkerInfo) {
         val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
