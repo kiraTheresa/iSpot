@@ -8,8 +8,8 @@ import android.widget.TextView
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.Marker
 import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.manager.SocialMarkerManager
-import com.zjgsu.kiratheresa.iblog.model.User
+import com.zjgsu.kiratheresa.ispot_app.manager.SocialMarkerManager
+import com.zjgsu.kiratheresa.ispot_app.model.User
 import com.zjgsu.kiratheresa.iblog.service.SocialService
 
 class SocialInfoWindowAdapter(

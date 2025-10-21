@@ -9,8 +9,8 @@ import android.widget.TextView
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.Marker
 import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
-import com.zjgsu.kiratheresa.iblog.model.MarkerType
+import com.zjgsu.kiratheresa.ispot_app.model.MarkerInfo
+import com.zjgsu.kiratheresa.ispot_app.model.MarkerType
 
 class CustomInfoWindowAdapter(
     private val context: Context,

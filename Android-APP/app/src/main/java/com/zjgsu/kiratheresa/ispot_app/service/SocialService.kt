@@ -1,12 +1,12 @@
 package com.zjgsu.kiratheresa.iblog.service
 
-import com.zjgsu.kiratheresa.iblog.model.FriendRequest
-import com.zjgsu.kiratheresa.iblog.model.FriendRequestStatus
-import com.zjgsu.kiratheresa.iblog.model.InteractionType
-import com.zjgsu.kiratheresa.iblog.model.Message
-import com.zjgsu.kiratheresa.iblog.model.Post
-import com.zjgsu.kiratheresa.iblog.model.SocialInteraction
-import com.zjgsu.kiratheresa.iblog.model.User
+import com.zjgsu.kiratheresa.ispot_app.model.FriendRequest
+import com.zjgsu.kiratheresa.ispot_app.model.FriendRequestStatus
+import com.zjgsu.kiratheresa.ispot_app.model.InteractionType
+import com.zjgsu.kiratheresa.ispot_app.model.Message
+import com.zjgsu.kiratheresa.ispot_app.model.Post
+import com.zjgsu.kiratheresa.ispot_app.model.SocialInteraction
+import com.zjgsu.kiratheresa.ispot_app.model.User
 import java.util.UUID
 
 object SocialService {

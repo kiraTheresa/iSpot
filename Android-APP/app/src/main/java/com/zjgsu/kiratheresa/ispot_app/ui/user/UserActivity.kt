@@ -10,10 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.ispot.android.R
+import com.zjgsu.kiratheresa.ispot_app.data.model.User
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
-import com.zjgsu.kiratheresa.ispot_app.data.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

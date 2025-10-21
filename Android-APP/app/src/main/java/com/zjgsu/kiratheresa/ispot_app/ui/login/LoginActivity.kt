@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ispot.android.R
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import com.zjgsu.kiratheresa.ispot_app.ui.main.MainActivity
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
-import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

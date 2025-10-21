@@ -8,7 +8,11 @@ import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.RegisterRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
 

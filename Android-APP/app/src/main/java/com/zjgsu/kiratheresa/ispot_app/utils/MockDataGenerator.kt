@@ -1,7 +1,7 @@
 package com.zjgsu.kiratheresa.ispot_app.utils
 
-import com.zjgsu.kiratheresa.iblog.model.LocationPoint
-import com.zjgsu.kiratheresa.iblog.model.User
+import com.zjgsu.kiratheresa.ispot_app.model.LocationPoint
+import com.zjgsu.kiratheresa.ispot_app.model.User
 import java.util.UUID
 
 object MockDataGenerator {

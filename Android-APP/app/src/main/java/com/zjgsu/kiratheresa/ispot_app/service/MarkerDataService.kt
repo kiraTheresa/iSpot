@@ -1,7 +1,7 @@
 package com.zjgsu.kiratheresa.iblog.service
 
-import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
-import com.zjgsu.kiratheresa.iblog.model.MarkerType
+import com.zjgsu.kiratheresa.ispot_app.model.MarkerInfo
+import com.zjgsu.kiratheresa.ispot_app.model.MarkerType
 import java.util.UUID
 
 object MarkerDataService {

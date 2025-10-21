@@ -3,9 +3,9 @@ package com.zjgsu.kiratheresa.ispot_app.data.repository
 import com.zjgsu.kiratheresa.ispot_app.data.model.User
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.RegisterRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
-import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import retrofit2.Call
 
 object UserRepository {

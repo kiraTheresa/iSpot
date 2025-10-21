@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.model
+package com.zjgsu.kiratheresa.ispot_app.model
 
 data class LocationPoint(
     val id: String,

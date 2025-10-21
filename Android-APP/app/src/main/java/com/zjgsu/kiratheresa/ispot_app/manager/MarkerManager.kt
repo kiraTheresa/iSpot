@@ -1,12 +1,12 @@
-package com.zjgsu.kiratheresa.iblog.manager
+package com.zjgsu.kiratheresa.ispot_app.manager
 
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.MarkerOptions
-import com.zjgsu.kiratheresa.iblog.model.MarkerInfo
-import com.zjgsu.kiratheresa.iblog.model.MarkerType
+import com.zjgsu.kiratheresa.ispot_app.model.MarkerInfo
+import com.zjgsu.kiratheresa.ispot_app.model.MarkerType
 
 class MarkerManager(private val aMap: AMap) {
 
