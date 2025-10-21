@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.temp2.ui.theme
+package com.zjgsu.kiratheresa.ispot_app.utils.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

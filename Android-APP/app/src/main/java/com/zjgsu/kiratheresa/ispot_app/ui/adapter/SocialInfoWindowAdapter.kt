@@ -10,7 +10,7 @@ import com.amap.api.maps.model.Marker
 import com.zjgsu.kiratheresa.iblog.R
 import com.zjgsu.kiratheresa.ispot_app.manager.SocialMarkerManager
 import com.zjgsu.kiratheresa.ispot_app.model.User
-import com.zjgsu.kiratheresa.iblog.service.SocialService
+import com.zjgsu.kiratheresa.ispot_app.service.SocialService
 
 class SocialInfoWindowAdapter(
     private val context: Context,

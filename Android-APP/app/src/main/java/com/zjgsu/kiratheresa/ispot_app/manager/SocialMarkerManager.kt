@@ -7,7 +7,7 @@ import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.MarkerOptions
 import com.zjgsu.kiratheresa.ispot_app.model.MarkerInfo
 import com.zjgsu.kiratheresa.ispot_app.model.MarkerType
-import com.zjgsu.kiratheresa.iblog.service.SocialService
+import com.zjgsu.kiratheresa.ispot_app.service.SocialService
 
 class SocialMarkerManager(private val aMap: AMap) {
 

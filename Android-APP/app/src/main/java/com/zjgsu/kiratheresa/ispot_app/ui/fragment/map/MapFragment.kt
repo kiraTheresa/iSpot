@@ -28,9 +28,9 @@ import com.zjgsu.kiratheresa.ispot_app.model.LocationPoint
 import com.zjgsu.kiratheresa.ispot_app.model.MarkerInfo
 import com.zjgsu.kiratheresa.ispot_app.model.MarkerType
 import com.zjgsu.kiratheresa.ispot_app.model.User
-import com.zjgsu.kiratheresa.iblog.service.LocationService
-import com.zjgsu.kiratheresa.iblog.service.MarkerDataService
-import com.zjgsu.kiratheresa.iblog.service.SocialService
+import com.zjgsu.kiratheresa.ispot_app.service.LocationService
+import com.zjgsu.kiratheresa.ispot_app.service.MarkerDataService
+import com.zjgsu.kiratheresa.ispot_app.service.SocialService
 import com.zjgsu.kiratheresa.iblog.ui.adapter.CustomInfoWindowAdapter
 import com.zjgsu.kiratheresa.iblog.ui.adapter.SocialInfoWindowAdapter
 import kotlinx.coroutines.CoroutineScope

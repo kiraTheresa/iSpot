@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.service
+package com.zjgsu.kiratheresa.ispot_app.service
 
 import com.zjgsu.kiratheresa.ispot_app.model.MarkerInfo
 import com.zjgsu.kiratheresa.ispot_app.model.MarkerType
