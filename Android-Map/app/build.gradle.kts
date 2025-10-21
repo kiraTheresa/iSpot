@@ -67,7 +67,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
 
     // 高德地图整合包
-    //    implementation("com.amap.api:3dmap:latest.integration")
+    //implementation("com.amap.api:3dmap:latest.integration")
     implementation("com.amap.api:3dmap:9.8.3")
 
     // Jetpack Compose BOM（版本统一管理）

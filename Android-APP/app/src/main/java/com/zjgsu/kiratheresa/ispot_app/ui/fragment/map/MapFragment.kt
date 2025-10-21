@@ -1,6 +1,7 @@
 package com.zjgsu.kiratheresa.ispot_app.ui.fragment.map
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -33,10 +34,12 @@ import com.zjgsu.kiratheresa.ispot_app.service.MarkerDataService
 import com.zjgsu.kiratheresa.ispot_app.service.SocialService
 import com.zjgsu.kiratheresa.ispot_app.ui.adapter.CustomInfoWindowAdapter
 import com.zjgsu.kiratheresa.ispot_app.ui.adapter.SocialInfoWindowAdapter
+import com.zjgsu.kiratheresa.ispot_app.ui.social.SocialActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.jvm.java
 
 class MapFragment : Fragment() {
 
@@ -61,6 +64,7 @@ class MapFragment : Fragment() {
     private lateinit var btnShowRequests: Button
     private lateinit var btnAddMarker: Button
     private lateinit var tvSocialInfo: TextView
+    private lateinit var btnNavigate: Button
 
     // Managers & Services
     private lateinit var trajectoryManager: TrajectoryManager
@@ -92,7 +96,6 @@ class MapFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_map_social, container, false)
         initViews(view)
         setupMap(savedInstanceState)
-//        setupManagers()
         setupListeners()
         return view
     }
@@ -111,8 +114,8 @@ class MapFragment : Fragment() {
         btnShowRequests = view.findViewById(R.id.btnShowRequests)
         btnAddMarker = view.findViewById(R.id.btnAddMarker)
         tvSocialInfo = view.findViewById(R.id.tvSocialInfo)
+        btnNavigate = view.findViewById(R.id.btnNavigate)
     }
-
 
     // 添加延迟初始化
     private fun initializeLocationService() {
@@ -123,7 +126,6 @@ class MapFragment : Fragment() {
 
     private fun setupManagers() {
         trajectoryManager = TrajectoryManager(aMap)
-//        locationService = LocationService(requireContext())
         markerManager = MarkerManager(aMap)
         socialMarkerManager = SocialMarkerManager(aMap)
 
@@ -155,7 +157,6 @@ class MapFragment : Fragment() {
                 onViewUserPosts(user)
             }
         )
-
     }
 
     private fun setupMarkerListeners() {
@@ -182,7 +183,6 @@ class MapFragment : Fragment() {
 
     // 在地图加载完成后初始化管理器
     private fun setupMap(savedInstanceState: Bundle?) {
-
         try {
             mapView.onCreate(savedInstanceState)
             aMap = mapView.map ?: return
@@ -204,7 +204,6 @@ class MapFragment : Fragment() {
             Log.e("MapFragment", "地图初始化失败", e)
             Toast.makeText(requireContext(), "地图初始化失败，请重试", Toast.LENGTH_LONG).show()
         }
-
     }
 
     private fun configureMapSettings() {
@@ -255,6 +254,11 @@ class MapFragment : Fragment() {
         btnShowNearby.setOnClickListener { showNearbyMarkers() }
         btnShowRequests.setOnClickListener { showRequestMarkers() }
         btnAddMarker.setOnClickListener { addMarkerAtCenter() }
+
+        // 添加跳转按钮监听器
+        btnNavigate.setOnClickListener {
+            navigateToSocialActivity()
+        }
     }
 
     private fun loadInitialData() {
@@ -328,6 +332,29 @@ class MapFragment : Fragment() {
 
         markerManager.addMarker(newMarker)
         markerManager.showInfoWindow(newMarker.id)
+    }
+
+    // 添加跳转到 SocialActivity 的方法
+    private fun navigateToSocialActivity() {
+        try {
+            val intent = Intent(requireActivity(), SocialActivity::class.java)
+
+            // 可以添加额外的数据传递
+            // intent.putExtra("current_lat", aMap.cameraPosition.target.latitude)
+            // intent.putExtra("current_lng", aMap.cameraPosition.target.longitude)
+            // intent.putExtra("current_mode", currentMode.name)
+
+            startActivity(intent)
+
+            // 如果需要动画效果，可以添加
+            // requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            Toast.makeText(requireContext(), "跳转到社交页面", Toast.LENGTH_SHORT).show()
+
+        } catch (e: Exception) {
+            Log.e("MapFragment", "跳转到 SocialActivity 失败", e)
+            Toast.makeText(requireContext(), "跳转失败，请重试", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // 社交互动方法
