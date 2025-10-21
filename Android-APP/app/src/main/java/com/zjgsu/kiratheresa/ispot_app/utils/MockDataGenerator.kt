@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.utils
+package com.zjgsu.kiratheresa.ispot_app.utils
 
 import com.zjgsu.kiratheresa.iblog.model.LocationPoint
 import com.zjgsu.kiratheresa.iblog.model.User

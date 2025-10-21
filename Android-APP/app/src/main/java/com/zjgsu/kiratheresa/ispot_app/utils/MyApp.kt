@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.utils
+package com.zjgsu.kiratheresa.ispot_app.utils
 
 import android.app.Application
 import com.amap.api.maps.MapsInitializer

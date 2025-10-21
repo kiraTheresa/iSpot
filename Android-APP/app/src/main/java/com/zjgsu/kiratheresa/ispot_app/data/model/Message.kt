@@ -1,4 +1,4 @@
-package com.ispot.android.data.model
+package com.zjgsu.kiratheresa.ispot_app.data.model
 
 data class Message(
     val id: String,

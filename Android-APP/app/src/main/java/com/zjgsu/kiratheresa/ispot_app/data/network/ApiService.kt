@@ -1,8 +1,12 @@
-package com.ispot.android.data.network
+package com.zjgsu.kiratheresa.ispot_app.data.network
 
-import com.ispot.android.data.model.Post
-import com.ispot.android.data.model.User
-import com.ispot.android.data.network.dto.*
+import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.data.model.User
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.RegisterRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
 import retrofit2.Call
 import retrofit2.http.*
 

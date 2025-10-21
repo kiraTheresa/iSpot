@@ -1,8 +1,12 @@
-package com.ispot.android.data.network
+package com.zjgsu.kiratheresa.ispot_app.data.network
 
-import com.ispot.android.data.model.Post
-import com.ispot.android.data.model.User
-import com.ispot.android.data.network.dto.*
+import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.data.model.User
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.RegisterRequest
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -31,7 +35,16 @@ class FakeApiService : ApiService {
         return if (u != null) {
             val token = "token-${genId("t")}"
             tokens[token] = u.id
-            FakeCall(Response.success(LoginResponse(true, "登录成功", u.copy(password = null), token)))
+            FakeCall(
+                Response.success(
+                    LoginResponse(
+                        true,
+                        "登录成功",
+                        u.copy(password = null),
+                        token
+                    )
+                )
+            )
         } else {
             FakeCall(Response.success(LoginResponse(false, "用户名或密码错误", null, null)))
         }
@@ -46,12 +59,26 @@ class FakeApiService : ApiService {
         users.add(u)
         val token = "token-${genId("t")}"
         tokens[token] = u.id
-        return FakeCall(Response.success(LoginResponse(true, "注册成功", u.copy(password = null), token)))
+        return FakeCall(
+            Response.success(
+                LoginResponse(
+                    true,
+                    "注册成功",
+                    u.copy(password = null),
+                    token
+                )
+            )
+        )
     }
 
     override fun getUser(userId: String): Call<User> {
         val u = users.find { it.id == userId }?.copy(password = null)
-        return if (u != null) FakeCall(Response.success(u)) else FakeCall(Response.error(404, ResponseBody.create(null, "not found")))
+        return if (u != null) FakeCall(Response.success(u)) else FakeCall(
+            Response.error(
+                404,
+                ResponseBody.create(null, "not found")
+            )
+        )
     }
 
     override fun updateUser(userId: String, body: UserUpdateRequest): Call<User> {

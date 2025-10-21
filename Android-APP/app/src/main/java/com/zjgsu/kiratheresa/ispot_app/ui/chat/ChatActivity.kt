@@ -6,8 +6,7 @@ import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.ispot.android.R
-import com.ispot.android.data.model.Message
-import com.ispot.android.ui.chat.MessageAdapter
+import com.zjgsu.kiratheresa.ispot_app.data.model.Message
 
 class ChatActivity : AppCompatActivity() {
 

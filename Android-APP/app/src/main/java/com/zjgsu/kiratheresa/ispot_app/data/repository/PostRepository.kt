@@ -1,8 +1,8 @@
-package com.ispot.android.data.repository
+package com.zjgsu.kiratheresa.ispot_app.data.repository
 
-import com.ispot.android.data.model.Post
-import com.ispot.android.data.network.NetworkModule
-import com.ispot.android.data.network.dto.CreatePostRequest
+import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest
 import retrofit2.Call
 
 object PostRepository {

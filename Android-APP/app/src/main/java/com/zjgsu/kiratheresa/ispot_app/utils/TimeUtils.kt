@@ -1,4 +1,4 @@
-package com.ispot.android.utils
+package com.zjgsu.kiratheresa.ispot_app.utils
 
 import android.text.format.DateUtils
 import android.content.Context

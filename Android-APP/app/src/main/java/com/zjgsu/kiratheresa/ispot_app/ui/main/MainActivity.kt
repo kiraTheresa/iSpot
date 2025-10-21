@@ -1,13 +1,13 @@
-package com.ispot.android.ui.main
+package com.zjgsu.kiratheresa.ispot_app.ui.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.ispot.android.R
 import com.ispot.android.ui.feed.FeedFragment
+import com.ispot.android.ui.login.LoginActivity
 import com.ispot.android.ui.user.UserActivity
-import com.ispot.android.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         session = SessionManager(this)
         // if not logged in, go to Login
         if (session.getUserId() == null) {
-            startActivity(Intent(this, com.ispot.android.ui.login.LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
         }

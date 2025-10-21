@@ -7,10 +7,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ispot.android.R
-import com.ispot.android.data.network.NetworkModule
-import com.ispot.android.data.network.dto.LoginRequest
-import com.ispot.android.ui.main.MainActivity
-import com.ispot.android.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
+import com.zjgsu.kiratheresa.ispot_app.ui.main.MainActivity
+import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,8 +54,8 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         btnLogin.isEnabled = false
-        NetworkModule.apiService.login(LoginRequest(u, p)).enqueue(object : Callback<com.ispot.android.data.network.dto.LoginResponse> {
-            override fun onResponse(call: Call<com.ispot.android.data.network.dto.LoginResponse>, response: Response<com.ispot.android.data.network.dto.LoginResponse>) {
+        NetworkModule.apiService.login(LoginRequest(u, p)).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 btnLogin.isEnabled = true
                 val body = response.body()
                 if (body?.success == true && body.token != null && body.user != null) {
@@ -68,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<com.ispot.android.data.network.dto.LoginResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 btnLogin.isEnabled = true
                 Toast.makeText(this@LoginActivity, "网络错误: ${t.message}", Toast.LENGTH_SHORT).show()
             }

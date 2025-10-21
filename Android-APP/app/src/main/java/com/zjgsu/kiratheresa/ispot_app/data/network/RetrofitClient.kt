@@ -1,4 +1,4 @@
-package com.ispot.android.data.network
+package com.zjgsu.kiratheresa.ispot_app.data.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

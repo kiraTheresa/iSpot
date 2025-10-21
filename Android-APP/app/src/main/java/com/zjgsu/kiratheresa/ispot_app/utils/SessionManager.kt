@@ -1,4 +1,4 @@
-package com.ispot.android.utils
+package com.zjgsu.kiratheresa.ispot_app.utils
 
 import android.content.Context
 import android.content.SharedPreferences

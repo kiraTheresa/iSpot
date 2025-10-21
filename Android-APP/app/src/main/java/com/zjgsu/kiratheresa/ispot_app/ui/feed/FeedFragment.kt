@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ispot.android.R
-import com.ispot.android.data.model.Post
-import com.ispot.android.data.network.NetworkModule
-import com.ispot.android.ui.feed.PostActivity
-import com.ispot.android.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
+import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

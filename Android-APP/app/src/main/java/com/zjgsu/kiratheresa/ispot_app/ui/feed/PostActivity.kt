@@ -6,9 +6,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ispot.android.R
-import com.ispot.android.data.network.NetworkModule
-import com.ispot.android.data.network.dto.CreatePostRequest
-import com.ispot.android.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest
+import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.model.Post
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,8 +38,8 @@ class PostActivity : AppCompatActivity() {
         }
         val userId = session.getUserId() ?: "u1"
         btnPost.isEnabled = false
-        NetworkModule.apiService.createPost(CreatePostRequest(userId, content, null)).enqueue(object : Callback<com.ispot.android.data.model.Post> {
-            override fun onResponse(call: Call<com.ispot.android.data.model.Post>, response: Response<com.ispot.android.data.model.Post>) {
+        NetworkModule.apiService.createPost(CreatePostRequest(userId, content, null)).enqueue(object : Callback<Post> {
+            override fun onResponse(call: Call<Post>, response: Response<Post>) {
                 btnPost.isEnabled = true
                 if (response.isSuccessful) {
                     Toast.makeText(this@PostActivity, "发布成功", Toast.LENGTH_SHORT).show()
@@ -47,7 +48,7 @@ class PostActivity : AppCompatActivity() {
                     Toast.makeText(this@PostActivity, "发布失败", Toast.LENGTH_SHORT).show()
                 }
             }
-            override fun onFailure(call: Call<com.ispot.android.data.model.Post>, t: Throwable) {
+            override fun onFailure(call: Call<Post>, t: Throwable) {
                 btnPost.isEnabled = true
                 Toast.makeText(this@PostActivity, "网络错误: ${t.message}", Toast.LENGTH_SHORT).show()
             }

@@ -1,4 +1,4 @@
-package com.ispot.android.utils
+package com.zjgsu.kiratheresa.ispot_app.utils
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

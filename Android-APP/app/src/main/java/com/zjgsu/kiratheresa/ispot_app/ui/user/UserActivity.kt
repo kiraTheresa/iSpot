@@ -10,9 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.ispot.android.R
-import com.ispot.android.data.network.NetworkModule
-import com.ispot.android.data.network.dto.UserUpdateRequest
-import com.ispot.android.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
+import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
+import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
+import com.zjgsu.kiratheresa.ispot_app.data.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,15 +56,15 @@ class UserActivity : AppCompatActivity() {
 
     private fun loadUser() {
         val id = userId ?: return
-        NetworkModule.apiService.getUser(id).enqueue(object : Callback<com.ispot.android.data.model.User> {
-            override fun onResponse(call: Call<com.ispot.android.data.model.User>, response: Response<com.ispot.android.data.model.User>) {
+        NetworkModule.apiService.getUser(id).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
                 val u = response.body() ?: return
                 tvUsername.text = u.username
                 etNickname.setText(u.nickname ?: "")
                 etBio.setText(u.bio ?: "")
                 Glide.with(this@UserActivity).load(u.avatarUrl ?: "").placeholder(R.mipmap.ic_launcher).into(ivAvatar)
             }
-            override fun onFailure(call: Call<com.ispot.android.data.model.User>, t: Throwable) {
+            override fun onFailure(call: Call<User>, t: Throwable) {
                 Toast.makeText(this@UserActivity, "加载失败: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
@@ -74,8 +75,8 @@ class UserActivity : AppCompatActivity() {
         val nick = etNickname.text.toString().trim().ifEmpty { null }
         val bio = etBio.text.toString().trim().ifEmpty { null }
         btnSave.isEnabled = false
-        NetworkModule.apiService.updateUser(id, UserUpdateRequest(nick, null, bio)).enqueue(object : Callback<com.ispot.android.data.model.User> {
-            override fun onResponse(call: Call<com.ispot.android.data.model.User>, response: Response<com.ispot.android.data.model.User>) {
+        NetworkModule.apiService.updateUser(id, UserUpdateRequest(nick, null, bio)).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
                 btnSave.isEnabled = true
                 if (response.isSuccessful) {
                     Toast.makeText(this@UserActivity, "保存成功", Toast.LENGTH_SHORT).show()
@@ -83,7 +84,7 @@ class UserActivity : AppCompatActivity() {
                     Toast.makeText(this@UserActivity, "保存失败", Toast.LENGTH_SHORT).show()
                 }
             }
-            override fun onFailure(call: Call<com.ispot.android.data.model.User>, t: Throwable) {
+            override fun onFailure(call: Call<User>, t: Throwable) {
                 btnSave.isEnabled = true
                 Toast.makeText(this@UserActivity, "网络错误: ${t.message}", Toast.LENGTH_SHORT).show()
             }

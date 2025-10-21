@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ispot.android.R
-import com.ispot.android.data.model.Post
-import com.ispot.android.data.network.NetworkModule
+import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.ispot.android.ui.user.UserActivity
-import com.ispot.android.utils.TimeUtils
+import com.zjgsu.kiratheresa.ispot_app.utils.TimeUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
