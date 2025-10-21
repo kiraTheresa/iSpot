@@ -1,7 +1,7 @@
 package com.zjgsu.kiratheresa.ispot_app.data.network
 
-import com.zjgsu.kiratheresa.ispot_app.data.model.Post
-import com.zjgsu.kiratheresa.ispot_app.data.model.User
+import com.zjgsu.kiratheresa.ispot_app.model.Post
+import com.zjgsu.kiratheresa.ispot_app.model.User
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse

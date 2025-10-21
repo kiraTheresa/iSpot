@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.ui.user.UserActivity
-import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.model.Post
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.utils.TimeUtils
 import retrofit2.Call

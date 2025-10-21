@@ -6,7 +6,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.zjgsu.kiratheresa.ispot_app.R
-import com.zjgsu.kiratheresa.ispot_app.data.model.Post
+import com.zjgsu.kiratheresa.ispot_app.model.Post
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager

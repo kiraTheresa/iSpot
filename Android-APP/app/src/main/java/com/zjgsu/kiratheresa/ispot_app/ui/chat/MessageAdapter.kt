@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.zjgsu.kiratheresa.ispot_app.R
-import com.zjgsu.kiratheresa.ispot_app.data.model.Message
+import com.zjgsu.kiratheresa.ispot_app.model.Message
 
 class MessageAdapter(private val context: Context, private val messages: List<Message>) : BaseAdapter() {
     override fun getCount(): Int = messages.size
