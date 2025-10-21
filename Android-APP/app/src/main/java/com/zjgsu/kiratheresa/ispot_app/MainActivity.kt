@@ -1,5 +1,6 @@
 package com.zjgsu.kiratheresa.ispot_app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.zjgsu.kiratheresa.ispot_app.ui.map.MapActivity
 import com.zjgsu.kiratheresa.ispot_app.ui.theme.ISpotAPPTheme
 
 // 命令式：需要手动操作View
@@ -21,5 +23,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) // 加载XML布局
 
+        // 创建跳转到MapActivity的Intent
+        val intent = Intent(this, MapActivity::class.java)
+        startActivity(intent)
+        finish() // 可选：关闭当前Activity，防止用户返回
     }
 }

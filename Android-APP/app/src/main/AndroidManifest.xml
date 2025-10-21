@@ -42,8 +42,7 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <!-- ====== Activity声明 ====== -->
-        <!-- 主启动Activity（需要决定保留哪一个作为LAUNCHER） -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -55,7 +54,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 从文件1合并的Activities -->
         <activity
             android:name=".ui.social.SocialActivity"
             android:exported="false" />
@@ -76,7 +74,6 @@
             android:name=".ui.feed.PostActivity"
             android:exported="false" />
 
-        <!-- 从文件2合并的Activity -->
         <activity
             android:name=".ui.map.MapActivity"
             android:exported="false"
