@@ -57,7 +57,7 @@
 
         <!-- 从文件1合并的Activities -->
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.social.SocialActivity"
             android:exported="false" />
 
         <activity
@@ -78,7 +78,7 @@
 
         <!-- 从文件2合并的Activity -->
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.map.MapActivity"
             android:exported="false"
             android:theme="@style/Theme.ISpotAPP" />
 

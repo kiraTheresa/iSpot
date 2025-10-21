@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.ispot_app.ui.activity
+package com.zjgsu.kiratheresa.ispot_app.ui.map
 
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +7,11 @@ import com.amap.api.maps.MapsInitializer
 import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.ui.fragment.map.MapFragment
 
-class MainActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_map)
 
         // 确保高德SDK提前初始化
         try {

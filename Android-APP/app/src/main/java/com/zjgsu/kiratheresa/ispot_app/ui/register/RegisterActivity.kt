@@ -10,7 +10,7 @@ import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.RegisterRequest
-import com.zjgsu.kiratheresa.ispot_app.ui.main.MainActivity
+import com.zjgsu.kiratheresa.ispot_app.ui.social.SocialActivity
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
                     session.saveToken(body.token)
                     session.saveUserId(body.user.id)
                     Toast.makeText(this@RegisterActivity, "注册成功", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+                    startActivity(Intent(this@RegisterActivity, SocialActivity::class.java))
                     finish()
                 } else {
                     Toast.makeText(this@RegisterActivity, body?.message ?: "注册失败", Toast.LENGTH_SHORT).show()

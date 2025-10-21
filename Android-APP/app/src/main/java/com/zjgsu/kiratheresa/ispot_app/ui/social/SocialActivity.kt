@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.ispot_app.ui.main
+package com.zjgsu.kiratheresa.ispot_app.ui.social
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import com.zjgsu.kiratheresa.ispot_app.ui.login.LoginActivity
 import com.zjgsu.kiratheresa.ispot_app.ui.user.UserActivity
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 
-class MainActivity : AppCompatActivity() {
+class SocialActivity : AppCompatActivity() {
 
     private lateinit var btnTabFeed: Button
     private lateinit var btnTabProfile: Button
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_social)
         session = SessionManager(this)
         // if not logged in, go to Login
         if (session.getUserId() == null) {

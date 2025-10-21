@@ -10,7 +10,7 @@ import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
-import com.zjgsu.kiratheresa.ispot_app.ui.main.MainActivity
+import com.zjgsu.kiratheresa.ispot_app.ui.social.SocialActivity
 import com.zjgsu.kiratheresa.ispot_app.ui.register.RegisterActivity
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 import retrofit2.Call
@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         // auto-login
         val saved = session.getUserId()
         if (saved != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SocialActivity::class.java))
             finish()
             return
         }
@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                     session.saveToken(body.token)
                     session.saveUserId(body.user.id)
                     Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, SocialActivity::class.java))
                     finish()
                 } else {
                     Toast.makeText(this@LoginActivity, body?.message ?: "登录失败", Toast.LENGTH_SHORT).show()
