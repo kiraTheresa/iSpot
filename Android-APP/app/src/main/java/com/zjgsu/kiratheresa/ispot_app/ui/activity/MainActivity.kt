@@ -1,11 +1,11 @@
-package com.zjgsu.kiratheresa.iblog.ui.activity
+package com.zjgsu.kiratheresa.ispot_app.ui.activity
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.amap.api.maps.MapsInitializer
-import com.zjgsu.kiratheresa.iblog.R
-import com.zjgsu.kiratheresa.iblog.ui.fragment.map.MapFragment
+import com.zjgsu.kiratheresa.ispot_app.R
+import com.zjgsu.kiratheresa.ispot_app.ui.fragment.map.MapFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.ui.fragment.map
+package com.zjgsu.kiratheresa.ispot_app.ui.fragment.map
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -20,7 +20,7 @@ import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Marker
 import com.amap.api.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.zjgsu.kiratheresa.iblog.R
+import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.manager.MarkerManager
 import com.zjgsu.kiratheresa.ispot_app.manager.SocialMarkerManager
 import com.zjgsu.kiratheresa.ispot_app.manager.TrajectoryManager
@@ -31,8 +31,8 @@ import com.zjgsu.kiratheresa.ispot_app.model.User
 import com.zjgsu.kiratheresa.ispot_app.service.LocationService
 import com.zjgsu.kiratheresa.ispot_app.service.MarkerDataService
 import com.zjgsu.kiratheresa.ispot_app.service.SocialService
-import com.zjgsu.kiratheresa.iblog.ui.adapter.CustomInfoWindowAdapter
-import com.zjgsu.kiratheresa.iblog.ui.adapter.SocialInfoWindowAdapter
+import com.zjgsu.kiratheresa.ispot_app.ui.adapter.CustomInfoWindowAdapter
+import com.zjgsu.kiratheresa.ispot_app.ui.adapter.SocialInfoWindowAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

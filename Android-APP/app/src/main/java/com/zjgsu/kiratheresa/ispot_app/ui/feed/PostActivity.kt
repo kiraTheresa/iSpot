@@ -1,11 +1,11 @@
-package com.ispot.android.ui.feed
+package com.zjgsu.kiratheresa.ispot_app.ui.feed
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ispot.android.R
+import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.data.model.Post
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.CreatePostRequest

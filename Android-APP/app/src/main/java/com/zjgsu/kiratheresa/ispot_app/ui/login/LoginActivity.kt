@@ -1,4 +1,4 @@
-package com.ispot.android.ui.login
+package com.zjgsu.kiratheresa.ispot_app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ispot.android.R
+import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import com.zjgsu.kiratheresa.ispot_app.ui.main.MainActivity
+import com.zjgsu.kiratheresa.ispot_app.ui.register.RegisterActivity
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         btnRegister = findViewById(R.id.btnRegister)
 
         btnLogin.setOnClickListener { attemptLogin() }
-        btnRegister.setOnClickListener { startActivity(Intent(this, com.ispot.android.ui.register.RegisterActivity::class.java)) }
+        btnRegister.setOnClickListener { startActivity(Intent(this, RegisterActivity::class.java)) }
     }
 
     private fun attemptLogin() {

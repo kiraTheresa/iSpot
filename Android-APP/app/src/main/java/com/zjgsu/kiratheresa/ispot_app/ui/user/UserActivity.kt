@@ -1,4 +1,4 @@
-package com.ispot.android.ui.user
+package com.zjgsu.kiratheresa.ispot_app.ui.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.ispot.android.R
+import com.zjgsu.kiratheresa.ispot_app.R
+import com.zjgsu.kiratheresa.ispot_app.ui.login.LoginActivity
 import com.zjgsu.kiratheresa.ispot_app.data.model.User
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
@@ -41,7 +42,7 @@ class UserActivity : AppCompatActivity() {
 
         userId = intent.getStringExtra("userId") ?: session.getUserId()
         if (userId == null) {
-            startActivity(Intent(this, com.ispot.android.ui.login.LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish(); return
         }
         loadUser()
@@ -49,7 +50,7 @@ class UserActivity : AppCompatActivity() {
         btnSave.setOnClickListener { saveUser() }
         btnLogout.setOnClickListener {
             session.clear()
-            startActivity(Intent(this, com.ispot.android.ui.login.LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }

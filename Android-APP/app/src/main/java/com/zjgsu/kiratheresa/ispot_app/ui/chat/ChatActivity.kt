@@ -1,11 +1,11 @@
-package com.ispot.android.ui.chat
+package com.zjgsu.kiratheresa.ispot_app.ui.chat
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.ispot.android.R
+import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.data.model.Message
 
 class ChatActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.zjgsu.kiratheresa.iblog.ui.adapter
+package com.zjgsu.kiratheresa.ispot_app.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.amap.api.maps.AMap
 import com.amap.api.maps.model.Marker
-import com.zjgsu.kiratheresa.iblog.R
+import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.manager.SocialMarkerManager
 import com.zjgsu.kiratheresa.ispot_app.model.User
 import com.zjgsu.kiratheresa.ispot_app.service.SocialService

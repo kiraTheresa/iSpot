@@ -1,4 +1,4 @@
-package com.ispot.android.ui.chat
+package com.zjgsu.kiratheresa.ispot_app.ui.chat
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.ispot.android.R
+import com.zjgsu.kiratheresa.ispot_app.R
 import com.zjgsu.kiratheresa.ispot_app.data.model.Message
 
 class MessageAdapter(private val context: Context, private val messages: List<Message>) : BaseAdapter() {

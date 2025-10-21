@@ -4,9 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.ispot.android.ui.feed.FeedFragment
-import com.ispot.android.ui.login.LoginActivity
-import com.ispot.android.ui.user.UserActivity
+import com.zjgsu.kiratheresa.ispot_app.R
+import com.zjgsu.kiratheresa.ispot_app.ui.feed.FeedFragment
+import com.zjgsu.kiratheresa.ispot_app.ui.login.LoginActivity
+import com.zjgsu.kiratheresa.ispot_app.ui.user.UserActivity
 import com.zjgsu.kiratheresa.ispot_app.utils.SessionManager
 
 class MainActivity : AppCompatActivity() {

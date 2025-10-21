@@ -1,4 +1,4 @@
-package com.ispot.android.ui.feed
+package com.zjgsu.kiratheresa.ispot_app.ui.feed
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ispot.android.R
-import com.ispot.android.ui.user.UserActivity
+import com.zjgsu.kiratheresa.ispot_app.R
+import com.zjgsu.kiratheresa.ispot_app.ui.user.UserActivity
 import com.zjgsu.kiratheresa.ispot_app.data.model.Post
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.utils.TimeUtils
