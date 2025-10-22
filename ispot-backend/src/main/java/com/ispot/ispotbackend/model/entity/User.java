@@ -5,7 +5,11 @@ public class User {
     private String username;
     private String password;
     private String nickname;
+<<<<<<< HEAD
     private String avatarUrl;
+=======
+    private String avatarUrl= "";
+>>>>>>> 7bc3476 (后端代码优化)
     private double lat;
     private double lng;
     private long lastActiveTime;
@@ -26,7 +30,13 @@ public class User {
     public void setNickname(String nickname) { this.nickname = nickname; }
 
     public String getAvatarUrl() { return avatarUrl; }
+<<<<<<< HEAD
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
+=======
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = (avatarUrl != null) ? avatarUrl : "";
+    }
+>>>>>>> 7bc3476 (后端代码优化)
 
     public double getLat() { return lat; }
     public void setLat(double lat) { this.lat = lat; }

@@ -4,8 +4,14 @@ public class UserDTO {
     private String username;
     private String password;
     private String nickname;
+<<<<<<< HEAD
     private Double lat;
     private Double lng;
+=======
+    private Double lat = null;  // 默认为 null
+    private Double lng = null;  // 默认为 null
+
+>>>>>>> 7bc3476 (后端代码优化)
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
