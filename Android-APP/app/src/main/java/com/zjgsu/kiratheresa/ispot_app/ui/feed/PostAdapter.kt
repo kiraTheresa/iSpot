@@ -14,6 +14,7 @@ import com.zjgsu.kiratheresa.ispot_app.ui.user.UserActivity
 import com.zjgsu.kiratheresa.ispot_app.model.Post
 import com.zjgsu.kiratheresa.ispot_app.data.network.NetworkModule
 import com.zjgsu.kiratheresa.ispot_app.utils.TimeUtils
+import com.zjgsu.kiratheresa.ispot_app.ui.comment.CommentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,6 +56,12 @@ class PostAdapter(private val items: MutableList<Post>) : RecyclerView.Adapter<P
 
         holder.btnComment.setOnClickListener {
             // TODO: open comment activity (not implemented)
+        }
+        holder.btnComment.setOnClickListener {
+            val ctx = holder.itemView.context
+            val intent = Intent(ctx, CommentActivity::class.java)
+            intent.putExtra("postId", p.id)  // 传递当前动态的ID
+            ctx.startActivity(intent)
         }
 
         holder.ivAvatar.setOnClickListener {
