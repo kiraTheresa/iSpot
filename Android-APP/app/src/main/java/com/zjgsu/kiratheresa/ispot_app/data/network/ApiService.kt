@@ -36,4 +36,9 @@ interface ApiService {
 
     @POST("post/{id}/like")
     fun likePost(@Path("id") postId: String): Call<Void>
+    @GET("post/{postId}/comments")
+    fun getComments(@Path("postId") postId: String): Call<List<Comment>>
+
+    @POST("post/{postId}/comment")
+    fun addComment(@Path("postId") postId: String, @Body request: Map<String, String>): Call<Comment>
 }
