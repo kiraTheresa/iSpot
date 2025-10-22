@@ -7,6 +7,7 @@ import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.LoginResponse
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.RegisterRequest
 import com.zjgsu.kiratheresa.ispot_app.data.network.dto.UserUpdateRequest
+import com.zjgsu.kiratheresa.ispot_app.model.Comment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -106,4 +107,20 @@ class FakeApiService : ApiService {
         if (idx != -1) posts[idx].likeCount = posts[idx].likeCount + 1
         return FakeCall(Response.success(null))
     }
+    // === 评论系统 ===
+    private val comments = mutableListOf<Comment>()
+
+    override fun getComments(postId: String): Call<List<Comment>> {
+        val list = comments.filter { it.postId == postId }.sortedBy { it.timestamp }
+        return FakeCall(Response.success(list))
+    }
+
+    override fun addComment(postId: String, request: Map<String, String>): Call<Comment> {
+        val userId = request["userId"] ?: return FakeCall(Response.error(400, ResponseBody.create(null, "Missing userId")))
+        val content = request["content"] ?: return FakeCall(Response.error(400, ResponseBody.create(null, "Missing content")))
+        val c = Comment(id = genId("c"), postId = postId, userId = userId, content = content, timestamp = System.currentTimeMillis())
+        comments.add(c)
+        return FakeCall(Response.success(c))
+    }
+
 }
